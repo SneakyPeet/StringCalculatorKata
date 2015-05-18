@@ -13,7 +13,8 @@ namespace KataStringCalculator
 
             if (!String.IsNullOrEmpty(str))
             {
-                value = Int32.Parse(str);
+                var strs = str.Split(',');
+                value = strs.Select(x => Int32.Parse(x)).Sum();
             }
 
             return value;

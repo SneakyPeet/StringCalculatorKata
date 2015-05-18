@@ -21,5 +21,13 @@ namespace KataStringCalculator
 
             Assert.AreEqual(10, value);
         }
+
+        [TestMethod]
+        public void GivenTwoNumbersThenNumber()
+        {
+            int value = StringCalculator.Add("10,11");
+
+            Assert.AreEqual(21, value);
+        }
     }
 }
