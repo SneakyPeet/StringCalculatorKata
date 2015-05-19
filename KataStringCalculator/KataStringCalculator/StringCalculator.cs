@@ -22,7 +22,7 @@ namespace KataStringCalculator
 
                 var strs = str.Split(new string[] { delimiter, "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-                var ints = strs.Select(x => Int32.Parse(x));
+                var ints = strs.Select(x => Int32.Parse(x)).Where(x => x < 1001);
                 var negatives = ints.Where(x => x < 0);
 
                 if (negatives.Count() > 0)

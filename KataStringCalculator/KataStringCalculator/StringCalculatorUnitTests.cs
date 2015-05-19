@@ -65,6 +65,22 @@ namespace KataStringCalculator
             {
                 Assert.AreEqual("negatives not allowed -1,-3", ex.Message);
             }
-        }      
+        }
+
+        [TestMethod]
+        public void GivenNumbersOver1000ThenIgnoreNumber()
+        {
+            int value = StringCalculator.Add("2,1001,3,1002");
+
+            Assert.AreEqual(5, value);
+        }
+
+        //[TestMethod]
+        public void GivenCustomDeliminterThenNumber()
+        {
+            int value = StringCalculator.Add("//[***]\n1***2***3");
+
+            Assert.AreEqual(6, value);
+        }
     }
 }
