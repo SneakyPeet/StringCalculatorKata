@@ -75,12 +75,28 @@ namespace KataStringCalculator
             Assert.AreEqual(5, value);
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void GivenCustomDeliminterThenNumber()
         {
             int value = StringCalculator.Add("//[***]\n1***2***3");
 
             Assert.AreEqual(6, value);
+        }
+
+        [TestMethod]
+        public void GivenCustomDelimintersThenNumber()
+        {
+            int value = StringCalculator.Add("//[*][%]\n1*2%3");
+
+            Assert.AreEqual(6, value);
+        }
+
+        [TestMethod]
+        public void GivenLotsOfCustomDelimintersThenNumber()
+        {
+            int value = StringCalculator.Add("//[*][yyy][%]\n1%2*4yyy3yyy7");
+
+            Assert.AreEqual(17, value);
         }
     }
 }
