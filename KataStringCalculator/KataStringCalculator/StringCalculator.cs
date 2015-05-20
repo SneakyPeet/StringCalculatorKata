@@ -19,12 +19,8 @@ namespace KataStringCalculator
                 var strs = str.Split(delimiters.ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
                 var ints = strs.Select(x => Int32.Parse(x)).Where(x => x < 1001);
-                var negatives = ints.Where(x => x < 0);
 
-                if (negatives.Count() > 0)
-                {
-                    throw new InvalidOperationException("negatives not allowed " + string.Join(",", negatives));
-                }
+                CheckForNegatives(ints);
 
                 value = ints.Sum();
             }
@@ -42,18 +38,34 @@ namespace KataStringCalculator
             {
                 Regex reg = new Regex(@"\[(?<x>.+?)\]+?");
                 var matches = reg.Matches(str);
-                foreach (Match match in matches)
+                if (matches.Count > 0)
                 {
-                    if (match.Success)
+                    foreach (Match match in matches)
                     {
-                        delimiters.Add(match.Groups["x"].Value);
+                        if (match.Success)
+                        {
+                            delimiters.Add(match.Groups["x"].Value);
+                        }
                     }
+                }
+                else
+                {
+                    delimiters.Add(str[2].ToString());
                 }
 
                 var index = str.IndexOf("\n");
                 str = str.Substring(index, str.Length - index);
             }
             return delimiters;
+        }
+
+        private static void CheckForNegatives(IEnumerable<int> ints)
+        {
+            var negatives = ints.Where(x => x < 0);
+            if (negatives.Count() > 0)
+            {
+                throw new InvalidOperationException("negatives not allowed " + string.Join(",", negatives));
+            }
         }
     }
 }
