@@ -14,25 +14,7 @@ namespace KataStringCalculator
 
             if (!String.IsNullOrEmpty(str))
             {
-                List<string> delimiters = new List<string>();
-                delimiters.Add(",");
-                delimiters.Add("\n");
-
-                if (str.StartsWith("//"))
-                {
-                    Regex reg = new Regex(@"\[(?<x>.+?)\]+?");
-                    var matches = reg.Matches(str);
-                    foreach (Match match in matches)
-                    {
-                        if (match.Success)
-                        {
-                            delimiters.Add(match.Groups["x"].Value);
-                        }
-                    }
-                    
-                    var index = str.IndexOf("\n");
-                    str = str.Substring(index, str.Length - index);
-                }
+                List<string> delimiters = ExtractDelimiters(ref str);
 
                 var strs = str.Split(delimiters.ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
@@ -48,6 +30,30 @@ namespace KataStringCalculator
             }
 
             return value;
+        }
+
+        private static List<string> ExtractDelimiters(ref String str)
+        {
+            List<string> delimiters = new List<string>();
+            delimiters.Add(",");
+            delimiters.Add("\n");
+
+            if (str.StartsWith("//"))
+            {
+                Regex reg = new Regex(@"\[(?<x>.+?)\]+?");
+                var matches = reg.Matches(str);
+                foreach (Match match in matches)
+                {
+                    if (match.Success)
+                    {
+                        delimiters.Add(match.Groups["x"].Value);
+                    }
+                }
+
+                var index = str.IndexOf("\n");
+                str = str.Substring(index, str.Length - index);
+            }
+            return delimiters;
         }
     }
 }
